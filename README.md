@@ -1,5 +1,5 @@
 # GCA
-The Guiding Center Approximation code utilizes standard relativistic equations as outlined in Northrop's work from 1963. To apply this method effectively, it's essential that the characteristic time and spatial scales of particle gyromotion are significantly smaller than those of magnetic field variations.
+The Guiding Center Approximation (GCA) code utilizes standard relativistic equations as outlined in Northrop's work from 1963. To apply this method effectively, it's essential that the characteristic time and spatial scales of particle gyromotion are significantly smaller than those of magnetic field variations.
 
 This code employs the Bulirsch-Stoer method to solve particle motion within pre-specified analytical electric and magnetic fields. The method is known for its high accuracy and efficiency, particularly in cases where the fields exhibit smooth variations.
 

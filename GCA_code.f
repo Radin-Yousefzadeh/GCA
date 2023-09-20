@@ -94,8 +94,8 @@ c------Initial Time STEP and Limits of Time STEP------------c
       mindt = 1.d-8                             !!! MINIMUM TIME STEP
 c----NOTE that dt will be adjusted in the BS subroutine------c
 c     Division step in space      
-      dx_d = (xmax_d - xmin_d)/Nx
-      dz_d = (zmax_d - zmin_d)/Nz
+!     dx_d = (xmax_d - xmin_d)/Nx
+!      dz_d = (zmax_d - zmin_d)/Nz
 c---- other parameters ----c
 !
          path_file =  '/public4/home/sc51081/Mehdi/gc_run/' 

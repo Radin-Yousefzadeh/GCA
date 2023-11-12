@@ -10,7 +10,7 @@
 !c---------------------------------------------------------------------------c
 
 program main
-  !use mpi
+  use mpi
 
   IMPLICIT NONE
 
@@ -45,9 +45,9 @@ program main
 
 !c--------------------------------------------------------------c
 !c                   Using MPI
- !     call MPI_INIT(mpierr)
- !     call MPI_COMM_SIZE(MPI_COMM_WORLD, npe, mpierr)
- !     call MPI_COMM_RANK(MPI_COMM_WORLD, mype, mpierr)
+  call MPI_INIT(mpierr)
+  call MPI_COMM_SIZE(MPI_COMM_WORLD, npe, mpierr)
+  call MPI_COMM_RANK(MPI_COMM_WORLD, mype, mpierr)
 !c--------------------------------------------------------------c
 !c-------------------Numerical Unit System (NUS)----------------c
 !c--------------------------------------------------------------c
@@ -86,18 +86,17 @@ program main
     NTimeStep = 10                            !! DATA will be saved each * time steps
     NTimeMax = 3.d4 !0000                     !! Maximum Number of Time Steps     
   endif
-  MAX_TIME = 0 !3.d4 !143 !0.0005d5               !!! in unit of T0      
+  MAX_TIME = 143 !3.d4 !143 !0.0005d5               !!! in unit of T0      
 !
 !c------Initial Time STEP and Limits of Time STEP------------c
   dt0   = 1.d-4
   maxdt = 10                                !!! MAXIMUM TIME STEP
   mindt = 1.d-8                             !!! MINIMUM TIME STEP
-
   ! General Numerical Data Reading
-  path_file = 'D:\PostDoc\Alexey\newfolder\' !'/public4/home/sc51081/Mehdi/gc_run/' 
-  fileinx = 'Bxx.dat'
-  fileiny = 'Byy.dat'
-  fileinz = 'Bzz.dat'
+  path_file = '/public4/home/sc51081/Mehdi/gc_run/' 
+  fileinx   = 'Bxx.dat'
+  fileiny   = 'Byy.dat'
+  fileinz   = 'Bzz.dat'
 
   open(22, file=trim(path_file)//fileinx, status='old', action='read')
   open(23, file=trim(path_file)//fileiny, status='old', action='read')
@@ -147,7 +146,6 @@ do n = 1, Nparticle
   !
   ek = vpara**2 + vperp1**2
   kk = kk + 1
-  !
   !!! goto 100
   !
   !c-------------- Loop for Present particle --------------------
@@ -185,7 +183,6 @@ do n = 1, Nparticle
     !
     !!!       w(1) = vpara
   endif
-  !
   !     stop calculating if time is up or the particle is out of the domain
   if (x > Nx_mhd .or. x < 1.02) goto 20
   if (y > Ny_mhd .or. y < 1.02) goto 20
@@ -219,8 +216,6 @@ do n = 1, Nparticle
     write(961, '(12e15.5)') &
       time, x, y, z, vperp1, vpara, kk, pitch1, ek
     !,sin(pitch1)*sin(pitch1)/B_c,ek
-    !         jkl =jkl + 1
-    !         print*, jkl
   endif
   !          print*, mype !, ek
   !c-----------------------------------BOX2----------------------------------
@@ -231,9 +226,6 @@ do n = 1, Nparticle
     !    & time,x,y,z,vperp1,vpara,sqrt(vpara*vpara+vperp1*vperp1),kk,pitch1
     !     & ,map1,ek
     !sin(pitch1)*sin(pitch1)/B_c,ek
-    !
-    !         jkl =jkl + 1
-    !         print*, jkl
   endif
   !
   !c-----------------------------------BOX3---------------------------------------
@@ -244,9 +236,6 @@ do n = 1, Nparticle
     !    & time,x,y,z,vperp1,vpara,sqrt(vpara*vpara+vperp1*vperp1),kk,pitch1
     !     & ,map1,ek
     !sin(pitch1)*sin(pitch1)/B_c,ek
-    !
-    !        jkl =jkl + 1
-    !         print*, jkl
   endif
   !        endif
   !c-----------------------------------BOX4---------------------------------------
@@ -259,9 +248,6 @@ do n = 1, Nparticle
       x, y, z, vperp1, vpara, pitch1, ek
     !    & time,x,y,z,vperp1,vpara,sqrt(vpara*vpara+vperp1*vperp1),kk,pitch1
     !     & ,map1,ek
-    !
-    !        jkl =jkl + 1
-    !         print*, jkl
   endif
   !        endif
   !c--------------------------------------------------------------------------------
@@ -269,23 +255,19 @@ do n = 1, Nparticle
   end do
   !c-----------------------Main Loop----------------------------c
   !c end of the main loop here
-  print *,"I'm process", mype," out of",npe," processes."," Max_Time=", Max_time
+  print *,"I'm process ", mype," out of",npe," processes."," Max_Time=", Max_time
   !c    
-  !888 continue
-  !        write (cmy,'(I4.4)') mype
-  !        write(222,'(10e15.5)') N_vv4 / (Nparticle*10)
-  !         
-  !write(*,*) 'Number of scaped particles', jj
-  !if (MAX_TIME .lt. 4300) MAX_TIME = MAX_TIME + 143
-  !if (MAX_TIME .gt. 4300 .and. MAX_TIME .lt. 3.d4)&
-  !MAX_TIME = MAX_TIME + 2850
-  !if ( MAX_TIME .lt. 3.d4 ) goto 3210
-  !If you only need one run - Only your maxtime run
-  if (MAX_TIME .lt. Max_TIME) goto 3210
+  write(*,*) 'Number of scaped particles', jj
+  if (MAX_TIME .lt. 4300) MAX_TIME = MAX_TIME + 143
+  if (MAX_TIME .gt. 4300 .and. MAX_TIME .lt. 3.d4)&
+  MAX_TIME = MAX_TIME + 2850
+  if ( MAX_TIME .lt. 3.d4 ) goto 3210
+  ! If you only need one run - Only your maxtime run
+  !c if (MAX_TIME .lt. Max_TIME) goto 3210
   !c
   CALL SYSTEM_CLOCK(t2, count_rate, count_max)
   WRITE(*,*) 'Elapsed time(seconds) = ', real(t2 - t1) / real(count_rate)
-  !     call MPI_FINALIZE(mpierr)
+  call MPI_FINALIZE(mpierr)
   stop
   ! End of the main loop
 end program main

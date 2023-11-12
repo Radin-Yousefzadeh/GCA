@@ -7,6 +7,8 @@ In this implementation, particles operate based on the Guiding Center approximat
 
 This particular version of the code is designed for continuous runs over different time intervals, typically 25 TimeSteps. Users can specify a collection box to gather information about both particles that remain within it and those passing through it. This feature is commonly utilized to analyze density variations within specific loops and boxes.
 
+The GCA code is improved and optimized. In this update, I've transitioned from Fortran 77 to Fortran 90, benefitting from enhanced features and improved readability. The code structure has been maintained without altering the logic or functionality. The adoption of Fortran 90's array syntax, explicit loop control, and modular design contributes to a more modern and maintainable codebase. Additionally, the code now adheres to Fortran 90 standards, making it compatible with modern compilers and facilitating future modifications and advancements in scientific computing.
+
 # Attribution
 Researchers who use this GCA code for scientific research are asked to cite the following two papers by Mehdi Yousefzadeh listed below.
 

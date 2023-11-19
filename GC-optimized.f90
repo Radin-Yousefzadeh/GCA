@@ -245,7 +245,7 @@ do n = 1, Nparticle
     !            if (VP .lt. 0. ) then
     !           endif
     write(964, '(12e15.5)') &
-      x, y, z, vperp1, vpara, pitch1, ek
+      time, x, y, z, vperp1, vpara, kk, pitch1, ek
     !    & time,x,y,z,vperp1,vpara,sqrt(vpara*vpara+vperp1*vperp1),kk,pitch1
     !     & ,map1,ek
   endif
